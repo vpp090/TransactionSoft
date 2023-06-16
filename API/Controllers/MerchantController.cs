@@ -1,22 +1,44 @@
-
+using Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-
+using Core.Entities;
 namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class MerchantController : ControllerBase
     {
-        [HttpGet]
-        public Task<ActionResult> GetAllMerchants()
+        private IMerchantService _merchantService;
+        private ILogger _logger;
+
+        public MerchantController(IMerchantService mService, ILogger logger)
         {
-            return null;
+            _merchantService = mService;
+            _logger = logger;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IReadOnlyList<Merchant>>> GetAllMerchants()
+        {
+            try
+            {
+                 var merchants = await _merchantService.GetMerchants();
+
+                 return Ok(merchants);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Something went wrong");
+                return BadRequest();
+            }
+           
         }
 
         [HttpPost]
-        public Task<ActionResult> AddNewMerchants()
+        public async Task<ActionResult<IReadOnlyList<Merchant>>> AddNewMerchants([FromForm] IFormFile csvFile)
         {
-            return null;
+            var result = await _merchantService.CreateMerchants(csvFile);
+
+            return Ok(result);
         }
     }
 }

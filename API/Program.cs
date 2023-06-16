@@ -1,5 +1,7 @@
 using API.Common;
+using Core.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(opt => {
     opt.UseSqlite(builder.Configuration.GetConnectionString(Constants.DefaultConnection));
 });
+
+
+builder.Services.AddProjectServices();
+
 
 var app = builder.Build();
 
