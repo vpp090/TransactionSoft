@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +18,7 @@ namespace Infrastructure.Data.Repositories
             var merchant = await _context.Merchants.FindAsync(id);
 
             if(merchant == null)
-               throw new ArgumentException("Merchant not found");
+               throw new Exception("Merchant not found");
 
             return merchant;
         }
@@ -32,7 +28,7 @@ namespace Infrastructure.Data.Repositories
             var merchants = await _context.Merchants.ToListAsync();
 
             if(merchants == null)
-                throw new ArgumentException("Merchants not found");
+                throw new Exception("Merchants not found");
 
             return merchants;
         }
@@ -45,6 +41,28 @@ namespace Infrastructure.Data.Repositories
 
             return merchants;
 
+        }
+
+        public async Task<bool> DeleteMerchant(int id)
+        {
+            try
+            {
+                var merchant = await _context.Merchants.Include(m => m.Transactions).FirstOrDefaultAsync(m => m.Id == id);
+                
+                if(merchant.Transactions != null)
+                    throw new Exception("Merchant has related transactions");
+
+                var result = _context.Remove(merchant);
+
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+           
         }
     }
 }

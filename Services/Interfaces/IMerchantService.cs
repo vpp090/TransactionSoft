@@ -1,13 +1,16 @@
 using Core.Entities;
 using Microsoft.AspNetCore.Http;
+using Services.Model;
 
 namespace Services.Interfaces
 {
     public interface IMerchantService
     {
-         Task<Merchant> GetMerchantById(string id);
-         Task<IReadOnlyList<Merchant>> GetMerchants();
+         Task<ServiceResponse<Merchant>> GetMerchantById(string id);
+         Task<ServiceResponse<IReadOnlyList<Merchant>>> GetMerchants();
 
-         Task<IReadOnlyList<Merchant>> CreateMerchants(IFormFile csvFile);
+         Task<ServiceResponse<IReadOnlyList<Merchant>>> CreateMerchants(IFormFile csvFile);
+
+         Task<ServiceResponse<bool>> DeleteMerchant(int id);
     }
 }

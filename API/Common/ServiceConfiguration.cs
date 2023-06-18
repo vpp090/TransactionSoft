@@ -15,7 +15,10 @@ namespace API.Common
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<IMerchantService, MerchantService>();
             services.AddScoped<ICsvReader<DataTable>, CsvReader>();
+            services.AddScoped<ITransactionService, TransactionService>();
             services.AddSingleton(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger("DefaultLogger"));
+
+            services.AddAutoMapper(typeof(Program));
 
             var serviceProvider = services.BuildServiceProvider();
         }

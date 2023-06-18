@@ -1,6 +1,8 @@
 using Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Core.Entities;
+using Services.Model;
+
 namespace API.Controllers
 {
     [ApiController]
@@ -17,28 +19,27 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Merchant>>> GetAllMerchants()
+        public async Task<ActionResult<ServiceResponse<IReadOnlyList<Merchant>>>> GetAllMerchants()
         {
-            try
-            {
-                 var merchants = await _merchantService.GetMerchants();
+               var result = await _merchantService.GetMerchants();
 
-                 return Ok(merchants);
-            }
-            catch(Exception ex)
-            {
-                _logger.LogError(ex, "Something went wrong");
-                return BadRequest();
-            }
-           
+               return result.Data != null ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost]
-        public async Task<ActionResult<IReadOnlyList<Merchant>>> AddNewMerchants([FromForm] IFormFile csvFile)
+        public async Task<ActionResult<ServiceResponse<IReadOnlyList<Merchant>>>> AddNewMerchants([FromForm] IFormFile csvFile)
         {
             var result = await _merchantService.CreateMerchants(csvFile);
 
-            return Ok(result);
+            return  result.Data != null ? Ok(result) : BadRequest(result);
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<ServiceResponse<bool>>> DeleteMerchant(int id)
+        {
+            var result = await _merchantService.DeleteMerchant(id);
+
+            return result.Data ? Ok(result) : BadRequest(result);
         }
     }
 }

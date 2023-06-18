@@ -11,10 +11,8 @@ namespace Infrastructure.Data
             
         }
 
-        public DbSet<AuthorizeTransaction> AuthorizeTransactions {get; set;}
-        public DbSet<ChargeTransaction> ChargeTransaction {get; set;}
-        public DbSet<RefundTransaction> RefundTransaction {get; set;}
-        public DbSet<ReversalTransaction> ReversalTransactions {get; set;}
+        public DbSet<TransactionType> TransactionTypes {get; set;}
+        public DbSet<Transaction> Transactions {get; set;}
         public DbSet<Merchant> Merchants {get; set;}
     }
 }
