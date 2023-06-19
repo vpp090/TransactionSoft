@@ -6,14 +6,13 @@ namespace Core.Entities
     {
         [Key]
         public int Id {get; set;}
-        public TType TType {get; set;}
-
+       
         public string Name {get; set;}
     }
 
     public enum TType 
     {
-        Authorize,
+        Authorize = 1,
         Charge,
         Refund,
         Reversal

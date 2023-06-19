@@ -10,7 +10,9 @@ namespace Services.Interfaces
     
         Task<ServiceResponse<IReadOnlyList<Transaction>>> GetAllTransactions();
         Task<ServiceResponse<Transaction>> CreateTransaction(TransactionDto transaction);
-        Task<ServiceResponse<IReadOnlyList<Transaction>>> CreateTransactions(List<Transaction> transactions);
-        
+        Task<ServiceResponse<IReadOnlyList<Transaction>>> CreateTransactions(List<TransactionDto> transactions);
+        Task<ServiceResponse<bool>> DeleteTransaction(Guid id);
+
+        Task<bool> DeleteTransactionsRecurringly();
     }
 }

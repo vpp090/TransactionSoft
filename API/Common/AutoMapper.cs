@@ -9,7 +9,8 @@ namespace API.Common
         public AutoMapper()
         {
             CreateMap<Transaction, TransactionDto>();
-            CreateMap<TransactionDto, Transaction>();
+            CreateMap<TransactionDto, Transaction>()
+                .ForMember(t => t.CreatedDate, opt => opt.MapFrom(src => DateTime.Now));
         }
         
     }

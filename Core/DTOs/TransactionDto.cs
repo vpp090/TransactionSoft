@@ -12,10 +12,10 @@ namespace Core.DTOs
 
         public int MerchantId {get; set;}
 
-        public TransactionStatus Status {get; set;}
+        public TransStatus Status {get; set;}
     }
 
-    public enum TransactionStatus
+    public enum TransStatus
     {
         Approved,
         Reversed,

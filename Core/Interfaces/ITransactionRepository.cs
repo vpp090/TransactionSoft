@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Core.DTOs;
 using Core.Entities;
 
 namespace Core.Interfaces
@@ -11,7 +8,9 @@ namespace Core.Interfaces
         Task<Transaction> GetTransaction(Guid id);
         Task<IReadOnlyList<Transaction>> GetAllTransactions();
 
-        Task<Transaction> CreateTransaction(Transaction transaction);
-        Task<IReadOnlyList<Transaction>> CreateTransactions(List<Transaction> transactions);
+        Task<Transaction> CreateTransaction(TransactionDto transaction);
+        Task<IReadOnlyList<Transaction>> CreateTransactions(List<TransactionDto> transactions);
+
+        Task<bool> DeleteTransactionsOnCondition();
     }
 }

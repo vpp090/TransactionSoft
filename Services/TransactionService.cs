@@ -22,8 +22,7 @@ namespace Services
         {
             try
             {
-                var transaction = _mapper.Map<Transaction>(trans);
-                var result = await _transactionRepo.CreateTransaction(transaction);
+                var result = await _transactionRepo.CreateTransaction(trans);
 
                 return new ServiceResponse<Transaction>(result);
             }
@@ -34,7 +33,7 @@ namespace Services
            
         }
 
-        public async Task<ServiceResponse<IReadOnlyList<Transaction>>> CreateTransactions(List<Transaction> transactions)
+        public async Task<ServiceResponse<IReadOnlyList<Transaction>>> CreateTransactions(List<TransactionDto> transactions)
         {
             try
             {
@@ -48,6 +47,17 @@ namespace Services
             }
            
 
+        }
+
+        public Task<ServiceResponse<bool>> DeleteTransaction(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> DeleteTransactionsRecurringly()
+        {
+            var result =  await _transactionRepo.DeleteTransactionsOnCondition();
+            return result;
         }
 
         public async Task<ServiceResponse<IReadOnlyList<Transaction>>> GetAllTransactions()

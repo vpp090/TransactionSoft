@@ -22,13 +22,12 @@ namespace Core.Entities
         [Required(ErrorMessage = "Mobile number is required")]
         [RegularExpression("^[0-9]{10}$")]
         public string CustomerPhone {get; set;}
+
+        [Column(TypeName="Datetime")]
+        public DateTime CreatedDate {get; set;}
         
-        [ForeignKey(nameof(TransactionType))]
-        public int TransactionTypeId {get; set;}
         public TransactionType TransactionType {get; set;}
 
-        [ForeignKey(nameof(Merchant))]
-        public int MerchantId {get; set;}
         public Merchant Merchant {get; set;}
     }
 

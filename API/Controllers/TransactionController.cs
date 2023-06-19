@@ -1,5 +1,6 @@
 using Core.DTOs;
 using Core.Entities;
+using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using Services.Model;
@@ -11,9 +12,11 @@ namespace API.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
-        public TransactionController(ITransactionService tService)
+        private readonly IRecurringJobManager _recurringJobManager;
+        public TransactionController(ITransactionService tService, IRecurringJobManager recurringJobManager)
         {
             _transactionService = tService;
+            _recurringJobManager = recurringJobManager;
         }
 
         [HttpGet]
@@ -33,7 +36,7 @@ namespace API.Controllers
         }
 
         [HttpPost("CreateTransactions")]
-        public async Task<ActionResult<ServiceResponse<IReadOnlyList<Transaction>>>> CreateTransactions([FromBody]List<Transaction> transactions)
+        public async Task<ActionResult<ServiceResponse<IReadOnlyList<Transaction>>>> CreateTransactions([FromBody]List<TransactionDto> transactions)
         {
             var result = await _transactionService.CreateTransactions(transactions);
 
@@ -44,6 +47,20 @@ namespace API.Controllers
         public async Task<ActionResult<ServiceResponse<IReadOnlyList<Transaction>>>> GetTransaction(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<bool>> DeleteTransaction(Guid id)
+        {
+            throw new NotImplementedException();
+
+         }
+
+        [HttpDelete("ScheduledDelete")]
+        public IActionResult DeleteTransactionsRecurringly()
+        {
+            _recurringJobManager.AddOrUpdate("jobId", () => _transactionService.DeleteTransactionsRecurringly(), Cron.Hourly);
+            return Ok();   
         }
     }
 }
