@@ -9,17 +9,10 @@ import { Merchant } from './models/merchant';
 })
 export class AppComponent implements OnInit {
   title = 'TransactionSoft';
-  merchants: Merchant[] = [];
-
-  constructor(private http: HttpClient) {}
+ 
+  constructor() {}
   
   ngOnInit(): void {
-    this.http.get<Merchant[]>('https://localhost:5001/api/merchant').subscribe({
-        next: (response: any) => this.merchants = response.data, 
-        error: error => console.log(error),
-        complete: () => {
-           console.log('request completed');
-        }
-    })
+   
   }
 }

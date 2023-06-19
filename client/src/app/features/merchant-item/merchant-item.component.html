@@ -1,0 +1,24 @@
+
+<div class="card mb-4 box-shadow">
+    <div class="card-header">
+    <h4 class="my-0 font-weight-normal">Name: {{merchant?.name}}</h4>
+</div>
+<div class="card-body" *ngIf="merchant">
+    <h2 class="pricing-card-title">Total Transaction Sum: {{merchant.totalTransactionSum}}</h2>
+    <ul class="list-unstyled mt-3 mb-4">
+        <li>{{merchant.description}}</li>
+        <li>{{merchant.email}}</li>
+        <li>{{merchant.status == 1 ? 'Active' : 'Inactive'}}</li>
+    </ul>
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-sm btn-block btn-outline-primary">View Merchant</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-sm  btn-outline-danger">Delete Merchant</button>
+        </div>
+    </div>
+   
+    
+</div>
+</div>

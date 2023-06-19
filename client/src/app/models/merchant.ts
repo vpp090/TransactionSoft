@@ -9,3 +9,5 @@ export interface Merchant {
     totalTransactionSum: number
     transactions: Transaction[]
   }
+
+  export class Merchant implements Merchant {}
