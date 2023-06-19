@@ -19,7 +19,6 @@ builder.Services.AddDbContext<DataContext>(opt => {
     opt.UseSqlite(builder.Configuration.GetConnectionString(Constants.DefaultConnection));
 });
 
-
 builder.Services.AddProjectServices();
 
 var options = new SQLiteStorageOptions();
@@ -27,6 +26,16 @@ builder.Services.AddHangfire(configuration => configuration
         .UseSQLiteStorage("Filename=transactionsoft.db;", options));
 
 builder.Services.AddHangfireServer();
+
+builder.Services.AddCors(options => 
+{
+    options.AddPolicy(name: "AppCors",
+    policy => {
+        policy.WithOrigins("https://localhost:4200", "http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -39,6 +48,8 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+
+app.UseCors("AppCors");
 
 app.UseAuthorization();
 
