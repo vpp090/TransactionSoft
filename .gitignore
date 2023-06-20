@@ -398,3 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 API/transactionsoft.db-shm
 API/transactionsoft.db-wal
+API/transactionsoft.db-wal
+API/transactionsoft.db-wal

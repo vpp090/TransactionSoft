@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Core.DTOs;
 using Core.Entities;
@@ -69,12 +65,36 @@ namespace Infrastructure.Data.Repositories
 
         public async Task<IReadOnlyList<Transaction>> GetAllTransactions()
         {
-            return await _context.Transactions.ToListAsync();
+            return await _context.Transactions.Include(t => t.TransactionType).Include(t => t.Merchant).ToListAsync();
         }
 
         public async Task<Transaction> GetTransaction(Guid id)
         {
-            return await _context.Transactions.FirstOrDefaultAsync(t => t.Id == id);
+            return await _context.Transactions.Include(t => t.TransactionType).Include(t => t.Merchant).FirstOrDefaultAsync(t => t.Id == id);
+        }
+
+        public async Task<bool> ProcessTransaction(Guid transId)
+        {
+             var transaction = await _context.Transactions.SingleOrDefaultAsync(t => t.Id == transId);
+
+             transaction.IsProcessed = true;
+
+             await _context.SaveChangesAsync();
+
+             return true;
+        }
+
+        public async Task<Transaction> UpdateTransaction(Transaction previousTrans)
+        {
+            var trans = await _context.Transactions.SingleOrDefaultAsync(t => t.Id == previousTrans.Id);
+
+            if(trans == null)
+                throw new Exception("No previously linked transaction");
+
+            trans = previousTrans;
+            await _context.SaveChangesAsync();
+
+            return trans;
         }
     }
 }

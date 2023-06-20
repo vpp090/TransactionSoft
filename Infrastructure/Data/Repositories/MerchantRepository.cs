@@ -25,7 +25,7 @@ namespace Infrastructure.Data.Repositories
 
         public async Task<IReadOnlyList<Merchant>> GetMerchants()
         {
-            var merchants = await _context.Merchants.ToListAsync();
+            var merchants = await _context.Merchants.Include(m => m.Transactions).ThenInclude(t => t.TransactionType).ToListAsync();
 
             if(merchants == null)
                 throw new Exception("Merchants not found");
@@ -45,24 +45,18 @@ namespace Infrastructure.Data.Repositories
 
         public async Task<bool> DeleteMerchant(int id)
         {
-            try
-            {
-                var merchant = await _context.Merchants.Include(m => m.Transactions).FirstOrDefaultAsync(m => m.Id == id);
-                
-                if(merchant.Transactions != null)
-                    throw new Exception("Merchant has related transactions");
+            var merchant = await _context.Merchants.Include(m => m.Transactions).FirstOrDefaultAsync(m => m.Id == id);
+            
+            if(merchant.Transactions != null)
+                throw new Exception("Merchant has related transactions");
 
-                var result = _context.Remove(merchant);
+            var result = _context.Remove(merchant);
 
-                await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-                return true;
-            }
-            catch(Exception)
-            {
-                throw;
-            }
-           
+            return true;
         }
+
+        
     }
 }

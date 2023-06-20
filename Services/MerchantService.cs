@@ -35,8 +35,7 @@ namespace Services
                     merchant.Description = row[nameof(merchant.Description)].ToString();
                     merchant.Email = row[nameof(merchant.Email)].ToString();
                     merchant.Status = (MerchantStatus)int.Parse(row[nameof(merchant.Status)].ToString());
-                    merchant.TotalTransactionSum = decimal.Parse(row[nameof(merchant.TotalTransactionSum)].ToString());
-
+                   
                     merchants.Add(merchant);
                 }
 

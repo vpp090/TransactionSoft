@@ -12,5 +12,7 @@ namespace Core.Interfaces
         Task<IReadOnlyList<Transaction>> CreateTransactions(List<TransactionDto> transactions);
 
         Task<bool> DeleteTransactionsOnCondition();
+        Task<Transaction> UpdateTransaction(Transaction previousTrans);
+        Task<bool> ProcessTransaction(Guid transId);
     }
 }

@@ -29,11 +29,15 @@ namespace Core.Entities
         public TransactionType TransactionType {get; set;}
 
         public Merchant Merchant {get; set;}
+
+        public Guid LinkedTransactionId {get; set;}
+
+        public bool IsProcessed {get; set;}
     }
 
     public enum TransactionStatus
     {
-        Approved,
+        Approved = 1,
         Reversed,
         Refunded,
         Error

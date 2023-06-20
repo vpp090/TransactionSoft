@@ -49,6 +49,14 @@ namespace API.Controllers
             throw new NotImplementedException();
         }
 
+        [HttpPost("ProcessTransaction")]
+        public async Task<ActionResult<ServiceResponse<Transaction>>> ProcessTransaction(Guid transId)
+        {
+           var result = await _transactionService.ProcessTransaction(transId);
+
+           return result.Error == null ? Ok(result) : BadRequest(result);
+        }
+
         [HttpDelete]
         public async Task<ActionResult<bool>> DeleteTransaction(Guid id)
         {

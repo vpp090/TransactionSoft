@@ -13,11 +13,13 @@ namespace Core.DTOs
         public int MerchantId {get; set;}
 
         public TransStatus Status {get; set;}
+
+        public Guid LinkedTransactionId {get; set;}
     }
 
     public enum TransStatus
     {
-        Approved,
+        Approved = 1,
         Reversed,
         Refunded,
         Error
@@ -26,16 +28,7 @@ namespace Core.DTOs
     public class TransactionType
     {
         public int Id {get; set;}
-        public TType TType {get; set;}
-
+       
         public string Name {get; set;}
-    }
-
-    public enum TType 
-    {
-        Authorize,
-        Charge,
-        Refund,
-        Reversal
     }
 }
