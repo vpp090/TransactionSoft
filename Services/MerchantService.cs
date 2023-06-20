@@ -19,6 +19,7 @@ namespace Services
         {
             _repository = repository;
             _reader = reader;
+            _logger = logger;
         }
 
         public async Task<ServiceResponse<IReadOnlyList<Merchant>>> CreateMerchants(IFormFile csvFile)

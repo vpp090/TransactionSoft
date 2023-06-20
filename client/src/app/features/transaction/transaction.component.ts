@@ -10,12 +10,14 @@ import { ApiService } from '../../shared/api.service';
 export class TransactionComponent implements OnInit{
     transactions: Transaction[] = [];
 
-    constructor(private apiService: ApiService){}
-
+  constructor(private apiService: ApiService){}
+ 
   ngOnInit(): void {
     this.apiService.getTransactions().subscribe({
         next: response => this.transactions = response.data,
         error: error => console.log(error)
     })
+
+   
   }
 }

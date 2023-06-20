@@ -11,7 +11,7 @@
             <li>{{transaction.customerPhone}}</li>
             <li>{{transaction.status == 1 ? 'Active' : 'Inactive'}}</li>
         </ul>
-        <button type="button" class="btn btn-lg btn-block btn-outline-success">Process Transaction</button>
+        <button type="button" (click)="processTransaction()" class="btn btn-lg btn-block btn-outline-success">Process Transaction</button>
     </div>
     </div>
 </div>
