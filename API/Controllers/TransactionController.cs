@@ -50,7 +50,7 @@ namespace API.Controllers
         }
 
         [HttpPost("ProcessTransaction")]
-        public async Task<ActionResult<ServiceResponse<Transaction>>> ProcessTransaction(Guid transId)
+        public async Task<ActionResult<ServiceResponse<bool>>> ProcessTransaction(Guid transId)
         {
            var result = await _transactionService.ProcessTransaction(transId);
 

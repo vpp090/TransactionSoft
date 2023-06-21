@@ -22,13 +22,12 @@ using System.Threading.Tasks;
 
 namespace API.UnitTests
 {
-    public class MerchantTests
+    public class MerchantTests : BaseTests
     {
-        private readonly Mock<ILogger> mockLog;
         
-        public MerchantTests()
+        public MerchantTests() : base()
         {
-             mockLog = new Mock<ILogger>();
+             
             
         }
 

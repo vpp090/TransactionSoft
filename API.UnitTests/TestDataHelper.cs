@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using AutoMapper.Configuration.Conventions;
+using Core.Entities;
 using Services.Model;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,27 @@ namespace API.UnitTests
         internal static ServiceResponse<IReadOnlyList<Merchant>> CreateMockMerchants()
         {
             return new ServiceResponse<IReadOnlyList<Merchant>> (new List<Merchant>());
+        }
+
+        internal static List<Transaction> GetTransactions()
+        {
+            var list = new List<Transaction>();
+
+            for(int i = 0; i < 10; i++)
+            {
+                list.Add(new Transaction
+                {
+                    Status = TransactionStatus.Approved,
+                    Amount = 100,
+                    CustomerEmail = "email" + i + "@email.com",
+                    IsProcessed = false,
+                    TransactionType = new TransactionType { Id = 1, Name = "Auth" },
+                    CustomerPhone = "11111" + i
+
+                }) ;
+            }
+
+            return list;
         }
     }
 }
